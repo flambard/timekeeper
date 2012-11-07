@@ -19,6 +19,7 @@
     absolute,
     bronstein,
     canadian,
+    delay,
     fischer,
     japanese
     %%
