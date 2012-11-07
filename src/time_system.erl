@@ -59,4 +59,4 @@ stop(TimerRef, TimeSystem) ->
 
 time_left(TimeSystem) ->
   Module = module(TimeSystem),
-  Module:time_left().
+  Module:time_left(TimeSystem).
