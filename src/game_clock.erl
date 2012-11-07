@@ -61,7 +61,7 @@ handle_call({hit, Player}, _From, S = #state{whose_turn = Player}) ->
   %% Clock swapped
   %%
   S1 = stop_timer(S),
-  TimeLeft = player_time_left(S, Player),
+  TimeLeft = player_time_left(S1, Player),
   S2 = swap_player_turn(S1),
   {reply, TimeLeft, start_timer(S2)};
 handle_call(stop, _From, S = #state{whose_turn = Player}) ->
@@ -69,7 +69,7 @@ handle_call(stop, _From, S = #state{whose_turn = Player}) ->
   %% Clock stopped
   %%
   S1 = stop_timer(S),
-  TimeLeft = player_time_left(S, Player),
+  TimeLeft = player_time_left(S1, Player),
   {reply, TimeLeft, S1};
 handle_call(_Request, _From, State) ->
   {reply, ok, State}.
