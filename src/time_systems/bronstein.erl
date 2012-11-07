@@ -30,10 +30,7 @@ start(#bronstein{time = Time}) ->
 
 stop(TimerRef, T = #bronstein{time = OldTimeLeft, bonus = Bonus}) ->
   TimeLeft = time_system:stop_timer(TimerRef),
-  TimeUsed = OldTimeLeft - TimeLeft,
-  if Bonus > TimeUsed -> T#bronstein{time = OldTimeLeft};
-     true             -> T#bronstein{time = TimeLeft + Bonus}
-  end.
+  T#bronstein{time = min(OldTimeLeft, TimeLeft + Bonus)}.
 
 next_time_period(#bronstein{}) ->
   none.

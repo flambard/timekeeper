@@ -27,9 +27,7 @@ start(#delay{time = Time, delay = Delay}) ->
 
 stop(TimerRef, T = #delay{time = OldTimeLeft}) ->
   TimeLeft = time_system:stop_timer(TimerRef),
-  if TimeLeft > OldTimeLeft -> T#delay{time = OldTimeLeft};
-     true                   -> T#delay{time = TimeLeft}
-  end.
+  T#delay{time = min(TimeLeft, OldTimeLeft)}.
 
 next_time_period(#delay{}) ->
   none.
