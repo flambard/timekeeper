@@ -95,7 +95,7 @@ handle_info(time_period_ended, S = #state{}) ->
     case Module:next_time_period(T) of
       none ->
         Timer = case Ts of
-                  []          -> none;
+                  []          -> undefined;
                   [NextT | _] -> time_system:start(NextT)
                 end,
         set_current_player_time_systems(S#state{timer = Timer}, Ts);
