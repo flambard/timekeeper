@@ -70,7 +70,7 @@ handle_call(stop, _From, S = #state{whose_turn = Player}) ->
   %%
   S1 = stop_timer(S),
   TimeLeft = player_time_left(S1, Player),
-  {reply, TimeLeft, S1};
+  {reply, TimeLeft, S1#state{whose_turn = undefined}};
 handle_call(_Request, _From, State) ->
   {reply, ok, State}.
 
