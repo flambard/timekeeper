@@ -14,6 +14,7 @@
     game_clock,
     game_clock_sup,
     time_system,
+    ticker,
 
     %% Time systems
     absolute,
