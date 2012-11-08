@@ -4,6 +4,7 @@
 %% API
 -export([
          start_link/1,
+         start_link/2,
          hit/2,
          stop/1
         ]).
@@ -21,6 +22,7 @@
 -record(state,
         {
           timer,
+          pid,
           whose_turn,
           black,
           white
@@ -32,7 +34,10 @@
 %%%
 
 start_link(TimeSystems) ->
-  gen_server:start_link(?MODULE, TimeSystems, []).
+  start_link(TimeSystems, self()).
+
+start_link(TimeSystems, Pid) ->
+  gen_server:start_link(?MODULE, {TimeSystems, Pid}, []).
 
 hit(GameClock, Player) ->
   gen_server:call(GameClock, {hit, Player}).
@@ -45,8 +50,10 @@ stop(GameClock) ->
 %%% gen_server callbacks
 %%%
 
-init(TimeSystems) ->
-  State = #state{black = TimeSystems, white = TimeSystems},
+init({TimeSystems, Pid}) ->
+  State = #state{black = TimeSystems,
+                 white = TimeSystems,
+                 pid = Pid},
   {ok, State}.
 
 handle_call({hit, Player}, _From, S = #state{whose_turn = undefined}) ->
@@ -147,4 +154,4 @@ player_time_left(#state{white = [T | _]}, white) ->
 
 
 signal_time_period_ended(S) ->
-  io:format("Time period ended for ~p~n", [S#state.whose_turn]).
+  S#state.pid ! {time_period_ended, S#state.whose_turn}.

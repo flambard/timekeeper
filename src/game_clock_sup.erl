@@ -37,4 +37,4 @@ start_link() ->
   supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 start_game_clock(TimeSystems) ->
-  supervisor:start_child(?MODULE, [TimeSystems]).
+  supervisor:start_child(?MODULE, [TimeSystems, self()]).
