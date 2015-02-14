@@ -2,7 +2,6 @@
 
 %% Behaviour functions
 -export([
-         behaviour_info/1,
          module/1,
          start_timer/1,
          stop_timer/1
@@ -16,16 +15,20 @@
         ]).
 
 
-behaviour_info(callbacks) ->
-  [
-   {next_time_period, 1},
-   {start, 1},
-   {stop, 2},
-   {time, 1},
-   {time_left, 1}
-  ];
-behaviour_info(_Other) ->
-  undefined.
+-callback next_time_period(TimeSystem :: term()) ->
+    none | term().
+
+-callback start(TimeSystem :: term()) ->
+    Timer :: reference().
+
+-callback stop(Timer :: reference(), TimeSystem :: term()) ->
+    TimeSystem :: term().
+
+-callback time(Args :: term()) ->
+    State :: term().
+
+-callback time_left(TimeSystem :: term()) ->
+    Time :: integer().
 
 
 %%%
