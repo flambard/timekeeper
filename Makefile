@@ -1,5 +1,5 @@
 all:
-	erl -make
+	erl -pa ebin/ -make
 
 dialyzer:
 	dialyzer ebin/
