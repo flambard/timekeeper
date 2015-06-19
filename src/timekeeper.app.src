@@ -1,0 +1,11 @@
+{application, timekeeper,
+ [
+  {vsn, "0.0.1"},
+  {registered, [game_clock_sup]},
+  {mod, {timekeeper, []}},
+  {applications,
+   [
+    kernel,
+    stdlib
+   ]}
+ ]}.
